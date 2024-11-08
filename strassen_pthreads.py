@@ -66,34 +66,5 @@ def parallel_strassen_matrix_multiply(A, B):
         C = np.vstack([np.hstack([C11, C12]), np.hstack([C21, C22])])
         return C
 
-# 测试并比较运行时间
-matrix_sizes = [64, 128, 256]  # 选择适合的 n*n 矩阵大小
-serial_times = []
-parallel_times = []
 
-for size in matrix_sizes:
-    A = np.random.rand(size, size)
-    B = np.random.rand(size, size)
-    
-    # 串行 Strassen 算法时间
-    start_time = time.time()
-    strassen_matrix_multiply(A, B)
-    serial_times.append(time.time() - start_time)
-    print(f"Serial Strassen time for {size}x{size} matrix: {serial_times[-1]:.4f} seconds")
-    
-    # 并行 Strassen 算法时间
-    start_time = time.time()
-    parallel_strassen_matrix_multiply(A, B)
-    parallel_times.append(time.time() - start_time)
-    print(f"Parallel Strassen time for {size}x{size} matrix: {parallel_times[-1]:.4f} seconds")
 
-# 可视化结果
-import matplotlib.pyplot as plt
-
-plt.plot(matrix_sizes, serial_times, label='Serial Strassen')
-plt.plot(matrix_sizes, parallel_times, label='Parallel Strassen')
-plt.xlabel('Matrix Size (n x n)')
-plt.ylabel('Time (seconds)')
-plt.title('Runtime Comparison of Serial and Parallel Strassen Matrix Multiplication')
-plt.legend()
-plt.show()
