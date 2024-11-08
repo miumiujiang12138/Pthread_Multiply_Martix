@@ -1,6 +1,6 @@
 import numpy as np
 import time
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 
 def add_matrix(A, B):
     return A + B
@@ -29,7 +29,7 @@ def parallel_matrix_multiply_recursive(C, A, B, n):
         T11, T12, T21, T22 = np.zeros((half_size, half_size)), np.zeros((half_size, half_size)), np.zeros((half_size, half_size)), np.zeros((half_size, half_size))
 
         # 使用多线程执行递归调用
-        with ProcessPoolExecutor() as executor:
+        with ThreadPoolExecutor() as executor:
             futures = [
                 executor.submit(parallel_matrix_multiply_recursive, T11, A11, B11, half_size),
                 executor.submit(parallel_matrix_multiply_recursive, T12, A12, B21, half_size),

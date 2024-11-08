@@ -1,6 +1,6 @@
 import numpy as np
 import time
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 
 def add_matrix(A, B):
     return A + B
@@ -46,7 +46,7 @@ def parallel_strassen_matrix_multiply(A, B):
         B11, B12, B21, B22 = B[:n, :n], B[:n, n:], B[n:, :n], B[n:, n:]
 
         # 使用线程池来计算辅助矩阵
-        with ProcessPoolExecutor() as executor:
+        with ThreadPoolExecutor() as executor:
             futures = [
                 executor.submit(strassen_matrix_multiply, add_matrix(A11, A22), add_matrix(B11, B22)),
                 executor.submit(strassen_matrix_multiply, add_matrix(A21, A22), B11),
